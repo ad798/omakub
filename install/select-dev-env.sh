@@ -1,17 +1,18 @@
 # Install default programming languages
-languages=$(gum choose "Ruby on Rails" "Node.js" "Go" "PHP" "Python" "Elixir" "Java" --no-limit --selected "Ruby on Rails","Node.js" --height 8 --header "Select programming languages")
+languages=$(gum choose "Ruby on Rails" "Node.js" "Go" "PHP" "Python" "Elixir" "Java" --no-limit --selected "Ruby on Rails","Node.js" --height 9 --header "Select programming languages")
 
 for language in $languages; do
 	case $language in
 	Ruby)
 		mise use --global ruby@3.3
-		gem install rails --no-document
+		mise x ruby -- gem install rails --no-document
 		;;
 	Node.js)
 		mise use --global node@lts
 		;;
 	Go)
 		mise use --global go@latest
+		code --install-extension golang.go
 		;;
 	Java)
 		mise use --global java@latest
@@ -22,6 +23,7 @@ for language in $languages; do
 	Elixir)
 		mise use --global erlang@latest
 		mise use --global elixir@latest
+		mise x elixir -- mix local.hex --force
 		;;
 	PHP)
 		sudo add-apt-repository -y ppa:ondrej/php
